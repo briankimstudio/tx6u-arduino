@@ -26,6 +26,24 @@ Low cost remote temperature sensor comaptible with La Crosse Weather Station
 #Testing
 <img src="https://lh3.googleusercontent.com/-VZ71K9ljQiw/VWI7aLff35I/AAAAAAAACio/orYc6GPfWn0/w844-h1358-no/L26A2455.JPG" height="500">
 
+## La Crosse Weather Station WS-9016U
+
+WS-9016U consists of Indoor Weather Station(WS-9016U) and Remote Temperature Sensor(TX6U)
+
+
+Acording to the manual, 
+
+- Power up remote sensor first, then, power up base station
+- Range of 80 feet
+- 
+### WS-9016U Base station,
+
+- can have up to 3 remote sensors
+
+### TX6U Remote sensor
+
+- transmit a signal every 3 minutes
+ 
 #License and Credits
 
 tx6u-arduino is based on Adafruit's [DHT library](https://learn.adafruit.com/dht?view=all) and jremington's [TX6U_send.ino](http://forum.arduino.cc/index.php?topic=303888.0) source code.
