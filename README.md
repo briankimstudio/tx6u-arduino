@@ -14,7 +14,7 @@ Low cost remote temperature sensor comaptible with La Crosse Weather Station
 
 WS-9016U consists of Indoor Weather Station(WS-9016U) and Remote Temperature Sensor(TX6U)
 
-Acording to the manual, 
+Acording to WS-9016U & TX6U manual, 
 
 - Power up remote sensor first, then, power up base station
 - Range of 80 feet
@@ -25,8 +25,7 @@ Acording to the manual,
 
 ### TX6U Remote Temperature Sensor
 
-- check temperature every 1 minute
-- transmit a signal every 3 minutes
+- transmit temperature every 1 minute
 
 #Parts
 
