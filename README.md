@@ -23,9 +23,9 @@ Acording to WS-9016U & TX6U manual,
 
 - can have up to 3 remote sensors
 
-### TX6U Remote Temperature Sensor
+### TX6U Remote Temperature Sensor,
 
-- transmit temperature every 1 minute
+- transmits temperature every 1 minute
 
 #Parts
 
