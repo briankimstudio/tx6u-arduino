@@ -20,7 +20,8 @@ Low cost remote temperature sensor comaptible with La Crosse Weather Station
 #Wiring
 
 #Testing
-![](https://lh3.googleusercontent.com/-VZ71K9ljQiw/VWI7aLff35I/AAAAAAAACio/orYc6GPfWn0/w844-h1358-no/L26A2455.JPG)
+<img src="https://lh3.googleusercontent.com/-VZ71K9ljQiw/VWI7aLff35I/AAAAAAAACio/orYc6GPfWn0/w844-h1358-no/L26A2455.JPG" height="500">
+
 #Reference
 
 - http://forum.arduino.cc/index.php?topic=303888.0
