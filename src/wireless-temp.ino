@@ -43,7 +43,7 @@ void setup() {
 
 // Changed int to float
 // num is in Celsius. Ex) 26.30
-// tskim May 24, 2015
+// Brian May 24, 2015
 void make_message(float num) {
   
   // make up a TC6U message from the integer num (-500 to 499)
@@ -64,7 +64,7 @@ void make_message(float num) {
   buf[4] = 0x0;  //bottom bit is parity
   
   // Adjusted digit mismatch in LA CROSSE WS-9016TWC
-  // tskim May 24, 2015
+  // Brian May 24, 2015
   num = num * 10;
   
   // encode the integer
@@ -126,7 +126,7 @@ void send_burst(char *msg) {
 }
 
 // Changed int to float 
-// tskim May 24, 2015
+// Brian May 24, 2015
 void send_message(float num) {
   digitalWrite(led,HIGH);
   make_message(num);
