@@ -3,7 +3,9 @@
 
 #include "DHT.h"
 
-#define DHTPIN 2     // what pin we're connected to
+#define DHTPIN  2     // PIN # for DHT22 Temperature Sensor
+#define TXPIN   10    // PIN # for 433Mhz Transmitter
+#define LEDPIN  13    // PIN # for LED Indicator
 
 #define DHTTYPE DHT21   // DHT 21 (AM2301)
 
@@ -25,19 +27,16 @@ DHT dht(DHTPIN, DHTTYPE);
 // Example to initialize DHT sensor for Arduino Due:
 //DHT dht(DHTPIN, DHTTYPE, 30);
 
-unsigned long msg_timer=180000; // Transmits a signal every 3 minutes
-unsigned long msg_gap=32; //gap between packets
-
-int led = 13;
-int tx = 10;  //data out to 434 MHz transmitter
+unsigned long msg_timer = 60000; // Transmits a signal every 1 minute
+unsigned long msg_gap = 32; //gap between packets
 
 char buf[11]; //message to be built
 
 void setup() {
-  Serial.begin(9600); 
+  Serial.begin(9600);
   Serial.println("Wireless Temp");
-  pinMode(led,OUTPUT);
-  pinMode(tx, OUTPUT);
+  pinMode(LEDPIN,OUTPUT);
+  pinMode(TXPIN, OUTPUT);
   dht.begin();
 }
 
@@ -45,7 +44,7 @@ void setup() {
 // num is in Celsius. Ex) 26.30
 // Brian May 24, 2015
 void make_message(float num) {
-  
+
   // make up a TC6U message from the integer num (-500 to 499)
 
   // parity table  0 1 2 3 4 5 6 7 8 9
@@ -62,11 +61,11 @@ void make_message(float num) {
   buf[2] = 0;    //type = temperature
   buf[3] = 0xf;  //device ID
   buf[4] = 0x0;  //bottom bit is parity
-  
+
   // Adjusted digit mismatch in LA CROSSE WS-9016TWC
   // Brian May 24, 2015
   num = num * 10;
-  
+
   // encode the integer
   num = num+500;
   h = num/100;
@@ -84,23 +83,23 @@ void make_message(float num) {
   buf[9] = t; //second copy of tens digit
 
   //if value parity odd, set message parity bit
-  if ( (p&1) == 1) buf[4] |= 1; 
+  if ( (p&1) == 1) buf[4] |= 1;
   //calculate and store checksum
   buf[10] = (buf[1]+buf[3]+buf[4]+buf[5]+buf[6]+buf[7]+buf[8]+buf[9])&0x0F;
 }
 
-void send_one(char s) { //s=1 for short TX off. 4th bit of quartet
-  digitalWrite(tx,HIGH);
+void send_one(char s) { //s=1 for short TXPIN off. 4th bit of quartet
+  digitalWrite(TXPIN,HIGH);
   delayMicroseconds(588);
-  digitalWrite(tx,LOW);
+  digitalWrite(TXPIN,LOW);
   if (s) delayMicroseconds(1020);
   else delayMicroseconds(1088);
 }
 
 void send_zero(char s) { //s=1 for short TX off, 4th bit of quartet
-  digitalWrite(tx,HIGH);
+  digitalWrite(TXPIN,HIGH);
   delayMicroseconds(1400);
-  digitalWrite(tx,LOW);
+  digitalWrite(TXPIN,LOW);
   if (s) delayMicroseconds(1020);
   else delayMicroseconds(1088);
 }
@@ -121,19 +120,19 @@ void send_burst(char *msg) {
     if(c&2) send_one(0);
     else send_zero(0);
     if(c&1) send_one(1); //"short tx off" (1020 us) for last bit
-    else send_zero(1); 
+    else send_zero(1);
   }
 }
 
-// Changed int to float 
+// Changed int to float
 // Brian May 24, 2015
 void send_message(float num) {
-  digitalWrite(led,HIGH);
+  digitalWrite(LEDPIN,HIGH);
   make_message(num);
   send_burst(buf);
   delay(msg_gap);
   send_burst(buf);
-  digitalWrite(led,LOW);
+  digitalWrite(LEDPIN,LOW);
 }
 
 void loop() {
@@ -142,23 +141,17 @@ void loop() {
 
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius
   float t = dht.readTemperature();
-  // Read temperature as Fahrenheit
-  float f = dht.readTemperature(true);
-  
+
   // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
+  if (isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
 
-  Serial.print(f);
-  Serial.println(" *F\t");
   Serial.print(t);
   Serial.println(" *C\t");
 
-  send_message(t);
+  send_message(t); // t is in Celisius. Ex) 26.30
   delay(msg_timer);
 }
