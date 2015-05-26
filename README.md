@@ -33,7 +33,7 @@ Acording to [WS-9016U](http://www.lacrossetechnology.com/9016/manual.pdf) & [TX6
 - Arduino Uno
 - DHT22 Temperature Humidity Sensor
 - 433Mhz Transmitter
-- 10k resistor
+- 10k resistor(pull up)
 - Breadboard
 
 ## Software
