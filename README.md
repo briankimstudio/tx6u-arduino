@@ -57,3 +57,5 @@ tx6u-arduino is distributed under GPL License.
 - http://forum.arduino.cc/index.php?topic=303888.0
 - https://learn.adafruit.com/dht?view=all
 - http://shop.ninjablocks.com/blogs/how-to/7501042-adding-rf-433mhz
+
+Leave comments on my [blog](http://hpclab.blogspot.com/2015/06/tx6u-arduino.html)
